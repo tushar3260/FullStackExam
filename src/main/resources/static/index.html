@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PG Management System</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fas fa-building-user"></i>
+                <span>PG Admin</span>
+            </div>
+            <nav>
+                <ul>
+                    <li class="active" onclick="showSection('dashboard')"><i class="fas fa-chart-line"></i> Dashboard</li>
+                    <li onclick="showSection('tenants')"><i class="fas fa-users"></i> Tenants</li>
+                    <li onclick="showSection('rooms')"><i class="fas fa-door-open"></i> Rooms</li>
+                    <li onclick="showSection('complaints')"><i class="fas fa-exclamation-circle"></i> Complaints</li>
+                    <li onclick="showSection('notices')"><i class="fas fa-bullhorn"></i> Notices</li>
+                    <li onclick="showSection('visitors')"><i class="fas fa-id-card"></i> Visitors</li>
+                    <li onclick="showSection('rent')"><i class="fas fa-money-bill-wave"></i> Rent</li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header>
+                <h1 id="section-title">Dashboard</h1>
+                <div class="user-profile">
+                    <img src="https://api.dicebear.com/6.x/avataaars/svg?seed=Admin" alt="Admin">
+                    <span>Welcome, Admin</span>
+                </div>
+            </header>
+
+            <section id="dashboard" class="content-section">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <i class="fas fa-users"></i>
+                        <div class="stat-info">
+                            <h3>Total Tenants</h3>
+                            <p id="total-tenants">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-door-open"></i>
+                        <div class="stat-info">
+                            <h3>Total Rooms</h3>
+                            <p id="total-rooms">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <div class="stat-info">
+                            <h3>Open Complaints</h3>
+                            <p id="open-complaints">0</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="tenants" class="content-section" style="display:none;">
+                <div class="section-header">
+                    <h2>Manage Tenants</h2>
+                    <button class="btn-primary" onclick="openModal('tenant-modal')"><i class="fas fa-plus"></i> Add Tenant</button>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Phone</th>
+                                <th>Email</th>
+                                <th>Room</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tenant-list"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="rooms" class="content-section" style="display:none;">
+                <div class="section-header">
+                    <h2>Manage Rooms</h2>
+                    <button class="btn-primary" onclick="openModal('room-modal')"><i class="fas fa-plus"></i> Add Room</button>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Room Number</th>
+                                <th>Floor</th>
+                                <th>Total Beds</th>
+                                <th>Occupied</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="room-list"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- More sections can be added here -->
+             <section id="complaints" class="content-section" style="display:none;">
+                <div class="section-header">
+                    <h2>Complaints</h2>
+                    <button class="btn-primary" onclick="openModal('complaint-modal')"><i class="fas fa-plus"></i> Add Complaint</button>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Status</th>
+                                <th>Created At</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="complaint-list"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="notices" class="content-section" style="display:none;">
+                <div class="section-header">
+                    <h2>Notice Board</h2>
+                    <button class="btn-primary" onclick="openModal('notice-modal')"><i class="fas fa-plus"></i> Add Notice</button>
+                </div>
+                <div class="notice-grid" id="notice-list"></div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <div id="tenant-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('tenant-modal')">&times;</span>
+            <h2>Add New Tenant</h2>
+            <form id="tenant-form">
+                <input type="text" id="t-name" placeholder="Name" required>
+                <input type="text" id="t-phone" placeholder="Phone" required>
+                <input type="email" id="t-email" placeholder="Email" required>
+                <input type="text" id="t-roomId" placeholder="Room ID">
+                <button type="submit" class="btn-submit">Save Tenant</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="room-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('room-modal')">&times;</span>
+            <h2>Add New Room</h2>
+            <form id="room-form">
+                <input type="number" id="r-number" placeholder="Room Number" required>
+                <input type="number" id="r-floor" placeholder="Floor Number" required>
+                <input type="number" id="r-beds" placeholder="Total Beds" required>
+                <button type="submit" class="btn-submit">Save Room</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="notice-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('notice-modal')">&times;</span>
+            <h2>Create Notice</h2>
+            <form id="notice-form">
+                <input type="text" id="n-title" placeholder="Title" required>
+                <textarea id="n-message" placeholder="Message" required></textarea>
+                <button type="submit" class="btn-submit">Post Notice</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="complaint-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('complaint-modal')">&times;</span>
+            <h2>Raise Complaint</h2>
+            <form id="complaint-form">
+                <input type="text" id="c-title" placeholder="Complaint Title" required>
+                <textarea id="c-description" placeholder="Describe the issue" required></textarea>
+                <button type="submit" class="btn-submit">Submit Complaint</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

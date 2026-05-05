@@ -23,4 +23,9 @@ public class NoticeController {
     public List<Notice> getAll() {
         return service.getAllNotices();
     }
+
+    @DeleteMapping("/delete/{id}")
+    public void delete(@PathVariable String id) {
+        service.deleteNotice(id);
+    }
 }

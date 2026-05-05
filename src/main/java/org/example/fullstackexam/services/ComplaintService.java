@@ -14,11 +14,23 @@ public class ComplaintService {
     private ComplaintRepository repo;
 
     public Complaint addComplaint(Complaint c) {
-        c.setStatus("OPEN");
+        if (c.getStatus() == null) {
+            c.setStatus("OPEN");
+        }
         return repo.save(c);
     }
 
     public List<Complaint> getAllComplaints() {
         return repo.findAll();
+    }
+
+    public Complaint resolveComplaint(String id) {
+        Complaint c = repo.findById(id).orElseThrow();
+        c.setStatus("RESOLVED");
+        return repo.save(c);
+    }
+
+    public void deleteComplaint(String id) {
+        repo.deleteById(id);
     }
 }
