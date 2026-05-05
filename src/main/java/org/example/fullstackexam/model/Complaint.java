@@ -13,7 +13,7 @@ public class Complaint {
     private String tenantId;
     private String title;
     private String description;
-    private String status; 
+    private String status;
     private LocalDateTime createdAt = LocalDateTime.now();
     private LocalDateTime updatedAt = LocalDateTime.now();
 

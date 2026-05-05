@@ -13,15 +13,11 @@ public class NoticeService {
     @Autowired
     private NoticeRepository repo;
 
-    public Notice addNotice(Notice notice) {
-        return repo.save(notice);
+    public Notice addNotice(Notice n) {
+        return repo.save(n);
     }
 
     public List<Notice> getAllNotices() {
         return repo.findAll();
-    }
-
-    public void deleteNotice(String id) {
-        repo.deleteById(id);
     }
 }
