@@ -23,4 +23,14 @@ public class ComplaintController {
     public List<Complaint> getAll() {
         return service.getAllComplaints();
     }
+
+    @PutMapping("/resolve/{id}")
+    public Complaint resolve(@PathVariable String id) {
+        return service.resolveComplaint(id);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public void delete(@PathVariable String id) {
+        service.deleteComplaint(id);
+    }
 }
